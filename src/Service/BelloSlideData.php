@@ -26,4 +26,15 @@ class BelloSlideData {
       ->execute()
       ->fetchAll();
   }
+
+  public function getActiveListSlide(): array {
+    return $this->database->select(
+      'bello_slider_data_slider',
+      'bs'
+    )->fields('bs')
+      ->orderBy('weight', 'ASC')
+      ->condition('status', 1, '=')
+      ->execute()
+      ->fetchAll();
+  }
 }
