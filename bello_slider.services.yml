@@ -1,0 +1,4 @@
+services:
+  bello_slider.bello_slide_data:
+    class: Drupal\bello_slider\Service\BelloSlideData
+    arguments: ['@database']

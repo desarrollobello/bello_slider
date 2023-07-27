@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Deslizador Bello module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bello_slider_install(): void {
+  $db = Drupal::database();
+
+  $elements_slides = [
+    [
+      'fid' => NULL,
+      'weight' => 0,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+    [
+      'fid' => NULL,
+      'weight' => 1,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+    [
+      'fid' => NULL,
+      'weight' => 2,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+    [
+      'fid' => NULL,
+      'weight' => 3,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+    [
+      'fid' => NULL,
+      'weight' => 4,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+    [
+      'fid' => NULL,
+      'weight' => 5,
+      'status' => 0,
+      'title' => NULL,
+      'link' => NULL,
+      'opacity' => 1,
+    ],
+  ];
+
+  $query = $db->insert('bello_slider_data_slider')
+    ->fields(['fid', 'weight', 'status', 'title', 'link', 'opacity']);
+
+  foreach ($elements_slides as $value) {
+    $query->values($value);
+  }
+
+  $query->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function bello_slider_uninstall(): void {
+  $database = Drupal::database();
+  $file = Drupal::entityTypeManager()->getStorage('file');
+
+  $query = $database->select(
+    'bello_slider_data_slider',
+    'bs'
+  )->fields('bs', ['fid'])
+    ->execute()
+    ->fetchAll();
+  foreach ($query as $value) {
+    if (!is_null($value->fid)) {
+      $file_load = $file->load($value->fid);
+      $file_load->delete();
+    }
+  }
+
+  $file_system = Drupal::service('file_system');
+  $file_system->deleteRecursive('public://image-slide-site-bello');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function bello_slider_schema(): array {
+  $schema['bello_slider_data_slider'] = [
+    'description' => 'Table description.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'fid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'description' => 'file identifier',
+        'not null' => FALSE,
+        'default' => NULL,
+      ],
+      'weight' => [
+        'description' => 'position weight',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => FALSE,
+        'default' => NULL,
+      ],
+      'status' => [
+        'description' => 'Boolean indicating whether this record is active.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'size' => 'tiny',
+      ],
+      'title' => [
+        'description' => 'publication title',
+        'type' => 'varchar',
+        'length' => 200,
+      ],
+      'link' => [
+        'description' => 'banner link',
+        'type' => 'varchar',
+        'length' => 300,
+        'not null' => FALSE,
+      ],
+      'opacity' => [
+        'description' => 'Opacidad',
+        'type' => 'float',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ]
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'fid' => ['fid'],
+      'weight' => ['weight'],
+    ],
+  ];
+
+  return $schema;
+}

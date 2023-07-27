@@ -1,0 +1,4 @@
+bello_slider.config_slider:
+  title: Configuración Slider
+  route_name: bello_slider.form_bello_slider
+  parent: system.admin_structure

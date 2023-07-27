@@ -1,0 +1,7 @@
+bello_slider.form_bello_slider:
+  path: '/admin/structure/config-slider'
+  defaults:
+    _title: 'Configuración Deslizador Principal'
+    _form: 'Drupal\bello_slider\Form\FormBelloSlider'
+  requirements:
+    _permission: 'administer bello_slider configuration'
