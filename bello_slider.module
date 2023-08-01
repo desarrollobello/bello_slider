@@ -5,12 +5,16 @@
  * Primary module hooks for Deslizador Bello module.
  */
 
-/*function bello_slider_preprocess_page(&$variables): void {
-  $file = Drupal::entityTypeManager()->getStorage('file');
+function bello_slider_preprocess_page(&$variables): void {
+  /*$file = Drupal::entityTypeManager()->getStorage('file');
   for ($i = 28; $i < 174; $i++) {
     $file_load = $file->load($i);
     if ($file_load) {
       $file_load->delete();
     }
-  }
-}*/
+  }*/
+
+  /*$service = Drupal::service('bello_slider.bello_slide_data');
+  dump($service->getActiveListSlide());
+*/
+}

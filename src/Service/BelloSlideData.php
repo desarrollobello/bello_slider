@@ -34,6 +34,7 @@ class BelloSlideData {
     )->fields('bs')
       ->orderBy('weight', 'ASC')
       ->condition('status', 1, '=')
+      ->condition('fid', '', '<>' )
       ->execute()
       ->fetchAll();
   }
